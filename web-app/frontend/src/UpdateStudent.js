@@ -1,6 +1,6 @@
 import React, {useState } from "react";
 import axios from 'axios';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 function UpdateStudent() {
     const {id} = useParams();
@@ -40,7 +40,10 @@ function UpdateStudent() {
                         <input type="number" placeholder="Enter Group" className="form-control"
                         onChange={e => setGroup(e.target.value)}/>
                     </div>
-                    <button className="btn btn-success">Update</button>
+                    <div className="d-flex justify-content-between">
+                        <Link to={`/`} className="btn btn-secondary">Back</Link>
+                        <button type="submit" className="btn btn-primary">Update</button>
+                    </div>
                 </form>
             </div>
         </div>

@@ -16,7 +16,6 @@ function ViewStudent() {
     return(
         <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
             <div className="w-50 bg-white rounded p-3">
-                <Link to={`/`} className="btn btn-secondary">Back</Link>
                 <table className="table">
                     <thead>
                         <tr>
@@ -37,6 +36,7 @@ function ViewStudent() {
                         }
                     </tbody>
                 </table>
+                <Link to={`/`} className="btn btn-secondary">Back</Link>
             </div>
         </div>
     )
