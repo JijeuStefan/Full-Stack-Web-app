@@ -32,6 +32,20 @@ app.post("/add", (req, res) => {
     })
 })
 
+app.put("/update/:id", (req, res) => {
+    const sql = "UPDATE `students` SET `Name` = ?,`Email` = ?,`Groups` = ? WHERE ID = ?";
+    const values = [
+        req.body.name,
+        req.body.email,
+        req.body.group
+    ]
+    const id = req.params.id;
+
+    db.query(sql , [...values,id], (err, data) => {
+        return err ? res.json("Error") : res.json(data);
+    })
+})
+
 app.listen(8081, () => {
     console.log("listening");
 })
