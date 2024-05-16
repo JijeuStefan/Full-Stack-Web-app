@@ -11,7 +11,7 @@ function AddStudent() {
 
     function handleSubmit(event){
         event.preventDefault();
-        axios.post('http://localhost:8081/add', {name, email, group})
+        axios.post('http://localhost:8081/student/add', {name, email, group})
         .then(res => {
             console.log(res);
             navigate('/');
@@ -38,7 +38,7 @@ function AddStudent() {
                         <input type="number" placeholder="Enter Group" className="form-control"
                         onChange={e => setGroup(e.target.value)}/>
                     </div>
-                    <button className="btn btn-success">Submit</button>
+                    <button className="btn btn-success">Add</button>
                 </form>
             </div>
         </div>

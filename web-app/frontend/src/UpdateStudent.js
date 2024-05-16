@@ -13,7 +13,7 @@ function UpdateStudent() {
 
     function handleSubmit(event){
         event.preventDefault();
-        axios.put('http://localhost:8081/update/' + id, {name, email, group})
+        axios.put('http://localhost:8081/student/update/' + id, {name, email, group})
         .then(res => {
             console.log(res);
             navigate('/');
@@ -40,7 +40,7 @@ function UpdateStudent() {
                         <input type="number" placeholder="Enter Group" className="form-control"
                         onChange={e => setGroup(e.target.value)}/>
                     </div>
-                    <button className="btn btn-success">Submit</button>
+                    <button className="btn btn-success">Update</button>
                 </form>
             </div>
         </div>

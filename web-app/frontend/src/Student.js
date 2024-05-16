@@ -11,11 +11,26 @@ function Student() {
         .catch(err => console.log(err));
     }, [])
 
+    const handleDelete = async (id) => {
+        const isConfirmed = window.confirm("Are you sure you want to delete this student?");
+        if (!isConfirmed) {
+            return; 
+        }
+        
+        try {
+            await axios.delete('http://localhost:8081/student/delete/' + id);
+            window.location.reload();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    
+
 
     return(
         <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
             <div className="w-50 bg-white rounded p-3">
-                <Link to="/add" className="btn btn-success">Add +</Link>
+                <Link to="/student/add" className="btn btn-success">Add +</Link>
                 <table className="table">
                     <thead>
                         <tr>
@@ -33,8 +48,9 @@ function Student() {
                                     <td>{data.Email}</td>
                                     <td>{data.Groups}</td>
                                     <td>
-                                        <Link to={`/update/${data.ID}`} className="btn btn-primary">Update</Link>
-                                        <button className="btn btn-danger ms-2">Delete</button>
+                                        <Link to={`student/${data.ID}`} className="btn btn-secondary">View</Link>
+                                        <Link to={`student/update/${data.ID}`} className="btn btn-primary">Update</Link>
+                                        <button className="btn btn-danger" onClick={e => handleDelete(data.ID)}>Delete</button>
                                     </td>
                                 </tr>
                             })

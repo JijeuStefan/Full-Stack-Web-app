@@ -20,7 +20,17 @@ app.get("/",(req, res) => {
     })
 })
 
-app.post("/add", (req, res) => {
+app.get("/student/:id", (req, res) => {
+    const sql = "SELECT * FROM `students` WHERE ID = ?";
+
+    const id = req.params.id;
+
+    db.query(sql , [id], (err, data) => {
+        return err ? res.json("Error") : res.json(data);
+    })
+})
+
+app.post("/student/add", (req, res) => {
     const sql = "INSERT INTO `students` (`Name`, `Email`, `Groups`) VALUES (?)";
     const values = [
         req.body.name,
@@ -32,7 +42,7 @@ app.post("/add", (req, res) => {
     })
 })
 
-app.put("/update/:id", (req, res) => {
+app.put("/student/update/:id", (req, res) => {
     const sql = "UPDATE `students` SET `Name` = ?,`Email` = ?,`Groups` = ? WHERE ID = ?";
     const values = [
         req.body.name,
@@ -42,6 +52,16 @@ app.put("/update/:id", (req, res) => {
     const id = req.params.id;
 
     db.query(sql , [...values,id], (err, data) => {
+        return err ? res.json("Error") : res.json(data);
+    })
+})
+
+app.delete("/student/delete/:id", (req, res) => {
+    const sql = "DELETE FROM `students` WHERE ID = ?";
+
+    const id = req.params.id;
+
+    db.query(sql , [id], (err, data) => {
         return err ? res.json("Error") : res.json(data);
     })
 })
