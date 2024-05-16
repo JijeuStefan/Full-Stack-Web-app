@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function AddStudent() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [group, setGroup] = useState(-1);
+    const [group, setGroup] = useState(0);
 
     const navigate = useNavigate();
 

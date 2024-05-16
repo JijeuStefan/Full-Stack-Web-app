@@ -20,8 +20,8 @@ app.get("/",(req, res) => {
     })
 })
 
-app.post("/add",(req, res) => {
-    const sql = "INSERT INTO `students` (`ID`, `Name`, `Email`, `Groups`) VALUES (?);";
+app.post("/add", (req, res) => {
+    const sql = "INSERT INTO `students` (`Name`, `Email`, `Groups`) VALUES (?)";
     const values = [
         req.body.name,
         req.body.email,
