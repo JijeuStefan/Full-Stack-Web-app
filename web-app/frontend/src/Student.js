@@ -6,7 +6,7 @@ function Student() {
     const [students, setStudent] = useState([])
 
     useEffect(()=>{
-        axios.get('http://localhost:8081/')
+        axios.get('http://localhost:8081/students')
         .then(res => setStudent(res.data))
         .catch(err => console.log(err));
     }, [])

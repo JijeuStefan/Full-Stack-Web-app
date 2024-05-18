@@ -13,7 +13,7 @@ const db = mysql.createConnection({
     database: "university"
 })
 
-app.get("/",(req, res) => {
+app.get("/students",(req, res) => {
     const sql = "SELECT * FROM students";
     db.query(sql , (err, data) => {
         return err ? res.json("Error") : res.json(data);

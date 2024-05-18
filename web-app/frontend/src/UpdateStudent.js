@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, {useEffect, useState } from "react";
 import axios from 'axios';
 import { useNavigate, useParams, Link } from "react-router-dom";
 
@@ -7,7 +7,17 @@ function UpdateStudent() {
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [group, setGroup] = useState(0);
+    const [group, setGroup] = useState("");
+    
+    useEffect(()=>{
+        axios.get('http://localhost:8081/student/' + id)
+        .then(res => {
+            setName(res.data[0].Name);
+            setEmail(res.data[0].Email);
+            setGroup(res.data[0].Groups);
+            console.log(res.data);
+        }).catch(err => console.log(err))
+    },[id])
 
     const navigate = useNavigate();
 
@@ -26,18 +36,18 @@ function UpdateStudent() {
                 <form onSubmit={handleSubmit}>
                     <h2>Update Student</h2>
                     <div className='mb-2'>
-                        <label htmlFor="">Name</label>
-                        <input type="text" placeholder='Enter Name' className="form-control"
+                        <label htmlFor="name">Name</label>
+                        <input type="text" className="form-control" value={name}
                         onChange={e => setName(e.target.value)}/>
                     </div>
                     <div className='mb-2'>
-                        <label htmlFor="">Email</label>
-                        <input type="email" placeholder="Enter Email" className="form-control"
+                        <label htmlFor="email">Email</label>
+                        <input type="email" className="form-control" value={email}
                         onChange={e => setEmail(e.target.value)}/>
                     </div>
                     <div className='mb-2'>
-                        <label htmlFor="">Group</label>
-                        <input type="number" placeholder="Enter Group" className="form-control"
+                        <label htmlFor="group">Group</label>
+                        <input type="number" className="form-control" value={group}
                         onChange={e => setGroup(e.target.value)}/>
                     </div>
                     <div className="d-flex justify-content-between">
