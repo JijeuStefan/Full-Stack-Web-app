@@ -15,7 +15,6 @@ function Login() {
 
         axios.post('http://localhost:8081/signin', {email, password})
         .then(res => {
-            console.log(res.data)
             if (res.data.errors){
                 setBckErrors(res.data.errors);
             }else{
