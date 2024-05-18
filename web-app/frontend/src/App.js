@@ -4,8 +4,8 @@ import Student from './StudentComponents/Student';
 import AddStudent from './StudentComponents/AddStudent';
 import UpdateStudent from './StudentComponents/UpdateStudent';
 import ViewStudent from './StudentComponents/ViewStudent';
-import Login from './Register/Login';
-import Signup from './Register/Signup';
+import Login from './RegisterComponents/Login';
+import Signup from './RegisterComponents/Signup';
 
 function App() {
   return (
