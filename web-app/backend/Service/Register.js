@@ -1,18 +1,37 @@
+const {check, validationResult} = require('express-validator');
+
 function RegisterService(app, db) {
-    app.post("/signin", (req, res) => {
-        const sql = "SELECT * FROM `credentials` WHERE `Email` = ? AND `Password` = ?";
-        db.query(sql , [req.body.email,req.body.password], (err, data) => {
-            if (err){
-                return res.json("Error");
+
+    app.post("/signin",[
+        check('email','The email does not have the correct format').isEmail().normalizeEmail(),
+        check('password')
+        .custom((value) => {
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+            if (!passwordRegex.test(value)) {
+                throw new Error('The password must be at least 8 characters long and contain at least one uppercase letter and one digit');
             }
-            if (data.length > 0){
-                return res.json("Success");
+            return true;
+        })],
+        (req, res) => {
+
+            const errors = validationResult(req);
+            if (!errors.isEmpty()){
+                return res.json(errors);
             }
-            else {
-                return res.json("Fail");
-            }
-    
-        })
+
+            const sql = "SELECT * FROM `credentials` WHERE `Email` = ? AND `Password` = ?";
+            db.query(sql , [req.body.email,req.body.password], (err, data) => {
+                if (err){
+                    return res.json("Error");
+                }
+                if (data.length > 0){
+                    return res.json("Success");
+                }
+                else {
+                    return res.json("Fail");
+                }
+        
+            })
     })
     
     

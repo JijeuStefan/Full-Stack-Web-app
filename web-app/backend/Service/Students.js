@@ -1,4 +1,3 @@
-const { json } = require('body-parser');
 const {check, validationResult} = require('express-validator');
 
 function StudentService(app,db) {
@@ -22,7 +21,7 @@ function StudentService(app,db) {
     
     app.post("/student/add",[
         check('name','The name should be at least 3 letters long').exists().isLength({min: 3}),
-        check('email','The email does not have the correct format').isEmail().normalizeEmail(),
+        check('email','The email does not match the correct format').isEmail().normalizeEmail(),
         check('group','The group should be between 700 and 900').isInt({ min: 700, max: 900 })] ,
         (req, res) => {
 
@@ -44,7 +43,7 @@ function StudentService(app,db) {
     
     app.put("/student/update/:id",[
         check('name','The name should be at least 3 letters long').exists().isLength({min: 3}),
-        check('email','The email does not have the correct format').isEmail().normalizeEmail(),
+        check('email','The email does not match the correct format').isEmail().normalizeEmail(),
         check('group','The group should be between 700 and 900').isInt({ min: 700, max: 900 })] ,
         (req, res) => {
             const errors = validationResult(req);
