@@ -13,6 +13,39 @@ const db = mysql.createConnection({
     database: "university"
 })
 
+app.get("/signin", (req, res) => {
+    const sql = "SELECT * FROM `credentials` WHERE `Email` = ? AND `Password` = ?";
+    const values = [
+        req.body.email,
+        req.body.password,
+    ]
+    db.query(sql , [values], (err, data) => {
+        if (err){
+            return res.json("Error");
+        }
+        if (data.length > 0){
+            return res.json("Success");
+        }
+        else {
+            return res.json("Fail");
+        }
+
+    })
+})
+
+
+app.post("/signup", (req, res) => {
+    const sql = "INSERT INTO `credentials` (`Name`, `Email`, `Password`) VALUES (?)";
+    const values = [
+        req.body.name,
+        req.body.email,
+        req.body.password,
+    ]
+    db.query(sql , [values], (err, data) => {
+        return err ? res.json("Error") : res.json(data);
+    })
+})
+
 app.get("/students",(req, res) => {
     const sql = "SELECT * FROM students";
     db.query(sql , (err, data) => {

@@ -59,6 +59,7 @@ function Student() {
                 </table>
             </div>
         </div>
+        
     )
 }
 
