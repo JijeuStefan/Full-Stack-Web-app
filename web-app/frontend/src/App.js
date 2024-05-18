@@ -1,11 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Student from './Student';
-import AddStudent from './AddStudent';
-import UpdateStudent from './UpdateStudent';
-import ViewStudent from './ViewStudent';
-import Login from './Login';
-import Signup from './Signup';
+import Student from './StudentComponents/Student';
+import AddStudent from './StudentComponents/AddStudent';
+import UpdateStudent from './StudentComponents/UpdateStudent';
+import ViewStudent from './StudentComponents/ViewStudent';
+import Login from './Register/Login';
+import Signup from './Register/Signup';
 
 function App() {
   return (
