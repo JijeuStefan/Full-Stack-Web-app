@@ -13,13 +13,9 @@ const db = mysql.createConnection({
     database: "university"
 })
 
-app.get("/signin", (req, res) => {
+app.post("/signin", (req, res) => {
     const sql = "SELECT * FROM `credentials` WHERE `Email` = ? AND `Password` = ?";
-    const values = [
-        req.body.email,
-        req.body.password,
-    ]
-    db.query(sql , [values], (err, data) => {
+    db.query(sql , [req.body.email,req.body.password], (err, data) => {
         if (err){
             return res.json("Error");
         }
@@ -41,6 +37,7 @@ app.post("/signup", (req, res) => {
         req.body.email,
         req.body.password,
     ]
+
     db.query(sql , [values], (err, data) => {
         return err ? res.json("Error") : res.json(data);
     })

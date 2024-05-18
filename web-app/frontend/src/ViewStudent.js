@@ -36,7 +36,7 @@ function ViewStudent() {
                         }
                     </tbody>
                 </table>
-                <Link to={`/`} className="btn btn-secondary">Back</Link>
+                <Link to={`/students`} className="btn btn-secondary">Back</Link>
             </div>
         </div>
     )

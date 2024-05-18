@@ -15,8 +15,9 @@ function Login() {
         event.preventDefault();
         setErrors(LoginValidation(email,password));
         if (errors.email === "" && errors.password === ""){
-            axios.get('http://localhost:8081/signin', {email, password})
+            axios.post('http://localhost:8081/signin', {email, password})
             .then(res => {
+                console.log(res.data)
                 if (res.data === "Success"){
                     navigate('/students');
                 } else {

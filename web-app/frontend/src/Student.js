@@ -48,8 +48,8 @@ function Student() {
                                     <td>{data.Email}</td>
                                     <td>{data.Groups}</td>
                                     <td>
-                                        <Link to={`student/${data.ID}`} className="btn btn-secondary">View</Link>
-                                        <Link to={`student/update/${data.ID}`} className="btn btn-primary">Update</Link>
+                                        <Link to={`/student/${data.ID}`} className="btn btn-secondary">View</Link>
+                                        <Link to={`/student/update/${data.ID}`} className="btn btn-primary">Update</Link>
                                         <button className="btn btn-danger" onClick={e => handleDelete(data.ID)}>Delete</button>
                                     </td>
                                 </tr>

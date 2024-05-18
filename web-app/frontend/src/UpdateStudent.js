@@ -26,7 +26,7 @@ function UpdateStudent() {
         axios.put('http://localhost:8081/student/update/' + id, {name, email, group})
         .then(res => {
             console.log(res);
-            navigate('/');
+            navigate('/students');
         }).catch(err => console.log(err));
     }
 
@@ -51,7 +51,7 @@ function UpdateStudent() {
                         onChange={e => setGroup(e.target.value)}/>
                     </div>
                     <div className="d-flex justify-content-between">
-                        <Link to={`/`} className="btn btn-secondary">Back</Link>
+                        <Link to={`/students`} className="btn btn-secondary">Back</Link>
                         <button type="submit" className="btn btn-primary">Update</button>
                     </div>
                 </form>

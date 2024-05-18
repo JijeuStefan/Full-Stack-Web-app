@@ -16,11 +16,11 @@ function Signup() {
         event.preventDefault();
         setErrors(SignupValidation(name,email,password));
         if (errors.name === "" && errors.email === "" && errors.password === ""){
-        axios.post('http://localhost:8081/signup', {name, email, password})
-        .then(res => {
-            console.log(res);
-            navigate('/');
-        }).catch(err => console.log(err));
+            axios.post('http://localhost:8081/signup', {name, email, password})
+            .then(res => {
+                console.log(res);
+                navigate('/');
+            }).catch(err => console.log(err));
     }}
 
     return(
