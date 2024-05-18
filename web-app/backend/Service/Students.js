@@ -1,4 +1,8 @@
+const { json } = require('body-parser');
+const {check, validationResult} = require('express-validator');
+
 function StudentService(app,db) {
+    
     app.get("/students",(req, res) => {
         const sql = "SELECT * FROM students";
         db.query(sql , (err, data) => {
@@ -16,16 +20,27 @@ function StudentService(app,db) {
         })
     })
     
-    app.post("/student/add", (req, res) => {
-        const sql = "INSERT INTO `students` (`Name`, `Email`, `Groups`) VALUES (?)";
-        const values = [
-            req.body.name,
-            req.body.email,
-            req.body.group,
-        ]
-        db.query(sql , [values], (err, data) => {
-            return err ? res.json("Error") : res.json(data);
-        })
+    app.post("/student/add",[
+        check('name','The name should be at least 3 letters long').exists().isLength({min: 3}),
+        check('email','The email does not have the correct format').isEmail().normalizeEmail(),
+        check('group','The group should be between 700 and 900').isInt({ min: 700, max: 900 })] ,
+        (req, res) => {
+
+            const errors = validationResult(req);
+            if (!errors.isEmpty()){
+                console.log(errors);
+                return res.json(errors);
+            }
+            
+            const sql = "INSERT INTO `students` (`Name`, `Email`, `Groups`) VALUES (?)";
+            const values = [
+                req.body.name,
+                req.body.email,
+                req.body.group,
+            ]
+            db.query(sql , [values], (err, data) => {
+                return err ? res.json("Error") : res.json(data);
+            })
     })
     
     app.put("/student/update/:id", (req, res) => {
