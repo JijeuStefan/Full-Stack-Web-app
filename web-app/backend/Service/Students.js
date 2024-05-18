@@ -28,7 +28,6 @@ function StudentService(app,db) {
 
             const errors = validationResult(req);
             if (!errors.isEmpty()){
-                console.log(errors);
                 return res.json(errors);
             }
             
@@ -43,18 +42,27 @@ function StudentService(app,db) {
             })
     })
     
-    app.put("/student/update/:id", (req, res) => {
-        const sql = "UPDATE `students` SET `Name` = ?,`Email` = ?,`Groups` = ? WHERE ID = ?";
-        const values = [
-            req.body.name,
-            req.body.email,
-            req.body.group
-        ]
-        const id = req.params.id;
-    
-        db.query(sql , [...values,id], (err, data) => {
-            return err ? res.json("Error") : res.json(data);
-        })
+    app.put("/student/update/:id",[
+        check('name','The name should be at least 3 letters long').exists().isLength({min: 3}),
+        check('email','The email does not have the correct format').isEmail().normalizeEmail(),
+        check('group','The group should be between 700 and 900').isInt({ min: 700, max: 900 })] ,
+        (req, res) => {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()){
+                return res.json(errors);
+            }
+
+            const sql = "UPDATE `students` SET `Name` = ?,`Email` = ?,`Groups` = ? WHERE ID = ?";
+            const values = [
+                req.body.name,
+                req.body.email,
+                req.body.group
+            ]
+            const id = req.params.id;
+        
+            db.query(sql , [...values,id], (err, data) => {
+                return err ? res.json("Error") : res.json(data);
+            })
     })
     
     app.delete("/student/delete/:id", (req, res) => {
