@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate,Link } from "react-router-dom";
 import axios from "axios";
 
@@ -10,6 +10,16 @@ function Login() {
 
     const [backendErrors, setBckErrors] = useState([]);
 
+    axios.defaults.withCredentials = true;
+    useEffect(()=>{
+        axios.get('http://localhost:8081/session')
+        .then(res => {
+            if (res.data.status)
+                navigate("/students");
+        })
+        .catch(err => console.log(err));
+    },[navigate])
+    
     function handleSubmit(event){
         event.preventDefault();
         axios.post('http://localhost:8081/signin', {email, password})
@@ -17,7 +27,7 @@ function Login() {
             if (res.data.errors){
                 setBckErrors(res.data.errors);
             }else{
-                if (res.data === "Success"){
+                if (res.data.Login){
                     navigate('/students');
                 } else {
                     alert("Email or password are incorrect!");

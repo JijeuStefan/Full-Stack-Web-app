@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, {useEffect, useState } from "react";
 import axios from 'axios';
 import { useNavigate,Link } from "react-router-dom";
 
@@ -10,6 +10,17 @@ function AddStudent() {
     const navigate = useNavigate();
 
     const [backendErrors, setBckErrors] = useState([]);
+
+
+    axios.defaults.withCredentials = true;
+    useEffect(()=>{
+        axios.get('http://localhost:8081/session')
+        .then(res => {
+            if (!res.data.status)
+                navigate("/");
+        })
+        .catch(err => console.log(err));
+    },[navigate])
 
     function handleSubmit(event){
         event.preventDefault();

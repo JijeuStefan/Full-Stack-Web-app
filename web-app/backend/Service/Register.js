@@ -18,10 +18,12 @@ function RegisterService(app, db) {
                     return res.json("Error");
                 }
                 if (data.length > 0){
-                    return res.json("Success");
+                    req.session.username = data[0].Email;
+                    console.log(req.session.username);
+                    return res.json({Login: true});
                 }
                 else {
-                    return res.json("Fail");
+                    return res.json({Login: false});
                 }
         
             })

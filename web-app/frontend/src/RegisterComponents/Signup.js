@@ -18,7 +18,6 @@ function Signup() {
             if (res.data.errors){
                 setBckErrors(res.data.errors);
             }else{
-                alert("Account created with success!");
                 navigate('/students');
             }}).catch(err => console.log(err));
     }

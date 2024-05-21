@@ -13,14 +13,23 @@ function UpdateStudent() {
 
     const [backendErrors, setBckErrors] = useState([]);
     
+    axios.defaults.withCredentials = true;
     useEffect(()=>{
+        axios.get('http://localhost:8081/session')
+        .then(res => {
+            if (!res.data.status)
+                navigate("/");
+        })
+        .catch(err => console.log(err));
+
+
         axios.get('http://localhost:8081/student/' + id)
         .then(res => {
             setName(res.data[0].Name);
             setEmail(res.data[0].Email);
             setGroup(res.data[0].Groups);
         }).catch(err => console.log(err))
-    },[id])
+    },[id, navigate])
 
     function handleSubmit(event){
         event.preventDefault();

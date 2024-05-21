@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Student() {
-    const [students, setStudent] = useState([])
+    const [students, setStudent] = useState([]);
 
+    const navigate = useNavigate();
+    
+    axios.defaults.withCredentials = true;
     useEffect(()=>{
+        axios.get('http://localhost:8081/session')
+        .then(res => {
+            if (!res.data.status)
+                navigate("/");
+        })
+        .catch(err => console.log(err));
+
+
         axios.get('http://localhost:8081/students')
         .then(res => setStudent(res.data))
         .catch(err => console.log(err));
-    }, [])
+    }, [navigate])
 
     const handleDelete = async (id) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this student?");
