@@ -34,7 +34,7 @@ function StartServer(){
 
     Session(app);
     RegisterService(app,db);
-    StudentService(app, db);
+    StudentService(app,db);
 
     app.listen(8081, () => {
         console.log("listening");
