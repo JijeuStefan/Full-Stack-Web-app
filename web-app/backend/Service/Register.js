@@ -4,14 +4,7 @@ function RegisterService(app, db) {
 
     app.post("/signin",[
         check('email','The email does not have the correct format').isEmail().normalizeEmail(),
-        check('password')
-        .custom((value) => {
-            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-            if (!passwordRegex.test(value)) {
-                throw new Error('The password must be at least 8 characters long and contain at least one uppercase letter and one digit');
-            }
-            return true;
-        })],
+        check('password','The password should be at least 8 caracters long and contain an Upper Case letter and a number').isStrongPassword({minLength: 8,minLowercase:1 ,minUppercase: 1, minNumbers: 1, minSymbols: 0})],
         (req, res) => {
 
             const errors = validationResult(req);
@@ -38,14 +31,8 @@ function RegisterService(app, db) {
     app.post("/signup",[
         check('name','The name should be at least 3 letters long').exists().isLength({min: 3}),
         check('email','The email does not have the correct format').isEmail().normalizeEmail(),
-        check('password')
-        .custom((value) => {
-            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-            if (!passwordRegex.test(value)) {
-                throw new Error('The password must be at least 8 characters long and contain at least one uppercase letter and one digit');
-            }
-            return true;
-        })],(req, res) => {
+        check('password','The password should be at least 8 caracters long and contain an Upper Case letter and a number').isStrongPassword({minLength: 8,minLowercase:1 ,minUppercase: 1, minNumbers: 1, minSymbols: 0})
+       ],(req, res) => {
 
                 const errors = validationResult(req);
                 if (!errors.isEmpty()){
