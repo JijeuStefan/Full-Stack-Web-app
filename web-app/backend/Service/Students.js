@@ -1,15 +1,23 @@
 const {check, validationResult} = require('express-validator');
 
 function StudentService(app,db) {
+
+    function isAuthenticated(req, res, next) {
+        if (req.session && req.session.username) {
+            return next();
+        } else {
+            res.status(401).json({ message: 'Unauthorized' });
+        }
+    }    
     
-    app.get("/students",(req, res) => {
+    app.get("/students",isAuthenticated,(req, res) => {
         const sql = "SELECT * FROM students";
         db.query(sql , (err, data) => {
             return err ? res.json("Error") : res.json(data);
         })
     })
     
-    app.get("/student/:id", (req, res) => {
+    app.get("/student/:id", isAuthenticated,(req, res) => {
         const sql = "SELECT * FROM `students` WHERE ID = ?";
     
         const id = req.params.id;
@@ -19,7 +27,7 @@ function StudentService(app,db) {
         })
     })
     
-    app.post("/student/add",[
+    app.post("/student/add",isAuthenticated,[
         check('name','The name should be at least 3 letters long').exists().isLength({min: 3}),
         check('email','The email does not match the correct format').isEmail().normalizeEmail(),
         check('group','The group should be between 700 and 900').isInt({ min: 700, max: 900 })] ,
@@ -41,7 +49,7 @@ function StudentService(app,db) {
             })
     })
     
-    app.put("/student/update/:id",[
+    app.put("/student/update/:id",isAuthenticated,[
         check('name','The name should be at least 3 letters long').exists().isLength({min: 3}),
         check('email','The email does not match the correct format').isEmail().normalizeEmail(),
         check('group','The group should be between 700 and 900').isInt({ min: 700, max: 900 })] ,
@@ -64,7 +72,7 @@ function StudentService(app,db) {
             })
     })
     
-    app.delete("/student/delete/:id", (req, res) => {
+    app.delete("/student/delete/:id", isAuthenticated,(req, res) => {
         const sql = "DELETE FROM `students` WHERE ID = ?";
     
         const id = req.params.id;

@@ -18,8 +18,7 @@ function RegisterService(app, db) {
                     return res.json("Error");
                 }
                 if (data.length > 0){
-                    req.session.username = data[0].Email;
-                    console.log(req.session.username);
+                    req.session.username = data[0].Email;                    
                     return res.json({Login: true});
                 }
                 else {
