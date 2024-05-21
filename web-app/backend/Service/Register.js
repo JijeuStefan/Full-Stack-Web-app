@@ -8,12 +8,10 @@ function RegisterService(app, db) {
         check('email','The email does not have the correct format').isEmail().normalizeEmail(),
         check('password','The password should be at least 8 caracters long and contain an Upper Case letter and a number').isStrongPassword({minLength: 8,minLowercase:1 ,minUppercase: 1, minNumbers: 1, minSymbols: 0})],
         async (req, res) => {
-
             const errors = validationResult(req);
             if (!errors.isEmpty()){
                 return res.json(errors);
             }
-
 
             try {
                 const sql = "SELECT * FROM `credentials` WHERE `Email` = ?";
@@ -27,8 +25,10 @@ function RegisterService(app, db) {
                         const user = data[0];
                         
                         if (await bcrypt.compare(req.body.password, user.Password)) {
-                            req.session.username = user.Email;
-                            return res.json({Login: true});
+                            const payload = {email: user.Email};
+                            console.log(process.env.ACCESS_TOKEN_SECRET);
+                            const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
+                            return res.json({Login:true, accessToken: accessToken});
                         }
                     }
                     return res.json({Login: false});
@@ -66,8 +66,9 @@ function RegisterService(app, db) {
                         if (err){
                             return res.json("Error");
                         }
-                        req.session.username = req.body.email;
-                        return res.json("Success");
+                        const user = {email: user.Email}
+                        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+                        return res.json({accessToken: accessToken});
                     })}
 
                 catch{

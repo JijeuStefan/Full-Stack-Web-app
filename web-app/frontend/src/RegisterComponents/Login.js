@@ -11,14 +11,14 @@ function Login() {
     const [backendErrors, setBckErrors] = useState([]);
 
     axios.defaults.withCredentials = true;
-    useEffect(()=>{
-        axios.get('http://localhost:8081/session')
-        .then(res => {
-            if (res.data.status)
-                navigate("/students");
-        })
-        .catch(err => console.log(err));
-    },[navigate])
+    // useEffect(()=>{
+    //     axios.get('http://localhost:8081/session')
+    //     .then(res => {
+    //         if (res.data.status)
+    //             navigate("/students");
+    //     })
+    //     .catch(err => console.log(err));
+    // },[navigate])
     
     function handleSubmit(event){
         event.preventDefault();
@@ -28,13 +28,13 @@ function Login() {
                 setBckErrors(res.data.errors);
             }else{
                 if (res.data.Login){
+                    localStorage.setItem('token', res.data.accessToken);
                     navigate('/students');
                 } else {
                     alert("Email or password are incorrect!");
             }}
 
-        }).catch(err => console.log(err));
-        }
+        }).catch(err => console.log(err));}
 
     function handleDismiss(index) {
         setBckErrors(backendErrors.filter((_, i) => i !== index));

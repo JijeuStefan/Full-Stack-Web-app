@@ -6,21 +6,25 @@ function Student() {
     const [students, setStudent] = useState([]);
 
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
     
     axios.defaults.withCredentials = true;
     useEffect(()=>{
-        axios.get('http://localhost:8081/session')
-        .then(res => {
-            if (!res.data.status)
-                navigate("/");
-        })
-        .catch(err => console.log(err));
+        // axios.get('http://localhost:8081/session')
+        // .then(res => {
+        //     if (!res.data.status)
+        //         navigate("/");
+        // })
+        // .catch(err => console.log(err));
 
 
-        axios.get('http://localhost:8081/students')
+        axios.get('http://localhost:8081/students',{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }})
         .then(res => setStudent(res.data))
         .catch(err => console.log(err));
-    }, [navigate])
+    }, [navigate, token])
 
     const handleDelete = async (id) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this student?");

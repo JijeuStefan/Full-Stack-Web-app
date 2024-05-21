@@ -1,14 +1,19 @@
 const {check, validationResult} = require('express-validator');
+const jwt = require('jsonwebtoken');
 
 function StudentService(app,db) {
 
     function isAuthenticated(req, res, next) {
-        if (req.session && req.session.username) {
-            return next();
-        } else {
-            res.status(401).json({ message: 'Unauthorized' });
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
+        if (token == null) { 
+            return res.status(401).json({ message: 'Unauthorized' }); 
         }
-    }    
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err,user) =>{
+            if(err){
+                return res.status(401).json({ message: 'Invalid Token' }); }
+            next();
+        })}
     
     app.get("/students",isAuthenticated,(req, res) => {
         const sql = "SELECT * FROM students";

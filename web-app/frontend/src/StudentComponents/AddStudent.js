@@ -13,14 +13,14 @@ function AddStudent() {
 
 
     axios.defaults.withCredentials = true;
-    useEffect(()=>{
-        axios.get('http://localhost:8081/session')
-        .then(res => {
-            if (!res.data.status)
-                navigate("/");
-        })
-        .catch(err => console.log(err));
-    },[navigate])
+    // useEffect(()=>{
+    //     axios.get('http://localhost:8081/session')
+    //     .then(res => {
+    //         if (!res.data.status)
+    //             navigate("/");
+    //     })
+    //     .catch(err => console.log(err));
+    // },[navigate])
 
     function handleSubmit(event){
         event.preventDefault();
