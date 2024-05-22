@@ -9,28 +9,28 @@ function RegisterService(app, db) {
     }
     
     
-    app.post('/token', (req,res)=>{
-        const refreshToken = req.body.token;
-        if (refreshToken == null) return res.sendStatus(403);
-        const sql = "SELECT * FROM `credentials` WHERE `token` = ?";
-        db.query(sql, [refreshToken], async (err, data) => {
-            if (err) {
-                return res.status(500).json("Error");
-            }
+    // app.post('/token', (req,res)=>{
+    //     const refreshToken = req.body.token;
+    //     if (refreshToken == null) return res.sendStatus(403);
+    //     const sql = "SELECT * FROM `credentials` WHERE `token` = ?";
+    //     db.query(sql, [refreshToken], async (err, data) => {
+    //         if (err) {
+    //             return res.status(500).json("Error");
+    //         }
 
-            if (data.length === 0) {
-                return res.status(403);
-            }
+    //         if (data.length === 0) {
+    //             return res.status(403);
+    //         }
 
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err,user) =>{
-                if(err){
-                    return res.status(403); }
-                const accessToken = generateAccessToken({email: user.email});
-                res.json({accessToken: accessToken});
-            })
-        })
+    //         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err,user) =>{
+    //             if(err){
+    //                 return res.status(403); }
+    //             const accessToken = generateAccessToken({email: user.email});
+    //             res.json({accessToken: accessToken});
+    //         })
+    //     })
 
-    })
+    // })
 
     app.post("/signin", [
         check('email', 'The email does not have the correct format').isEmail().normalizeEmail(),
@@ -90,7 +90,6 @@ function RegisterService(app, db) {
 
                 try {
                     const hashedPassword = await bcrypt.hash(req.body.password, 5);
-                    console.log(hashedPassword);
                     const sql = "INSERT INTO `credentials` (`Name`, `Email`, `Password`) VALUES (?)";
                     const values = [
                         req.body.name,
@@ -102,9 +101,7 @@ function RegisterService(app, db) {
                         if (err){
                             return res.json("Error");
                         }
-                        const payload = {email: user.Email}
-                        const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET)
-                        return res.json({accessToken: accessToken});
+                        return res.json();
                     })}
 
                 catch{

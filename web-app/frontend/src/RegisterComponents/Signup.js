@@ -19,8 +19,7 @@ function Signup() {
             if (res.data.errors){
                 setBckErrors(res.data.errors);
             }else{
-                localStorage.setItem('token', res.data.accessToken);
-                navigate('/students');
+                navigate('/');
             }}).catch(err => console.log(err));
     }
 
