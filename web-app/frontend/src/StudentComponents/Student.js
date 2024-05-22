@@ -33,7 +33,10 @@ function Student() {
         }
         
         try {
-            await axios.delete('http://localhost:8081/student/delete/' + id);
+            await axios.delete('http://localhost:8081/student/delete/' + id,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }});
             window.location.reload();
         } catch (err) {
             console.log(err);

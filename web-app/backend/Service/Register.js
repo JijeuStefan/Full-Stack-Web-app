@@ -7,10 +7,30 @@ function RegisterService(app, db) {
     function generateAccessToken(payload){
         return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
     }
-    // app.post('/token', (req,res)=>{
-    //     const refreshToken = req.body.token;
+    
+    
+    app.post('/token', (req,res)=>{
+        const refreshToken = req.body.token;
+        if (refreshToken == null) return res.sendStatus(403);
+        const sql = "SELECT * FROM `credentials` WHERE `token` = ?";
+        db.query(sql, [refreshToken], async (err, data) => {
+            if (err) {
+                return res.status(500).json("Error");
+            }
 
-    // })
+            if (data.length === 0) {
+                return res.status(403);
+            }
+
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err,user) =>{
+                if(err){
+                    return res.status(403); }
+                const accessToken = generateAccessToken({email: user.email});
+                res.json({accessToken: accessToken});
+            })
+        })
+
+    })
 
     app.post("/signin", [
         check('email', 'The email does not have the correct format').isEmail().normalizeEmail(),
