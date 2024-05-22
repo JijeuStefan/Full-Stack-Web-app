@@ -6,7 +6,7 @@ function Student() {
     const [students, setStudent] = useState([]);
 
     const navigate = useNavigate();
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
     
     axios.defaults.withCredentials = true;
     useEffect(()=>{

@@ -12,6 +12,8 @@ function UpdateStudent() {
     const navigate = useNavigate();
 
     const [backendErrors, setBckErrors] = useState([]);
+
+    const token = localStorage.getItem('accessToken');
     
     axios.defaults.withCredentials = true;
     useEffect(()=>{
@@ -23,17 +25,23 @@ function UpdateStudent() {
         // .catch(err => console.log(err));
 
 
-        axios.get('http://localhost:8081/student/' + id)
+        axios.get('http://localhost:8081/student/' + id, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }})
         .then(res => {
             setName(res.data[0].Name);
             setEmail(res.data[0].Email);
             setGroup(res.data[0].Groups);
         }).catch(err => console.log(err))
-    },[id, navigate])
+    },[id, token])
 
     function handleSubmit(event){
         event.preventDefault();
-        axios.put('http://localhost:8081/student/update/' + id, {name, email, group})
+        axios.put('http://localhost:8081/student/update/' + id, {name, email, group},{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }})
         .then(res => {
             if (res.data.errors){
                 setBckErrors(res.data.errors);

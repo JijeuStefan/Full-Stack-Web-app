@@ -11,6 +11,7 @@ function AddStudent() {
 
     const [backendErrors, setBckErrors] = useState([]);
 
+    const token = localStorage.getItem('accessToken');
 
     axios.defaults.withCredentials = true;
     // useEffect(()=>{
@@ -24,7 +25,10 @@ function AddStudent() {
 
     function handleSubmit(event){
         event.preventDefault();
-        axios.post('http://localhost:8081/student/add', {name, email, group})
+        axios.post('http://localhost:8081/student/add', {name, email, group}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }})
         .then(res => {
             if (res.data.errors){
                 setBckErrors(res.data.errors);

@@ -28,7 +28,8 @@ function Login() {
                 setBckErrors(res.data.errors);
             }else{
                 if (res.data.Login){
-                    localStorage.setItem('token', res.data.accessToken);
+                    localStorage.setItem('accessToken', res.data.accessToken);
+                    localStorage.setItem('refreshToken', res.data.refreshToken);
                     navigate('/students');
                 } else {
                     alert("Email or password are incorrect!");

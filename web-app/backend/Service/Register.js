@@ -4,41 +4,57 @@ const jwt = require('jsonwebtoken');
 
 function RegisterService(app, db) {
 
-    app.post("/signin",[
-        check('email','The email does not have the correct format').isEmail().normalizeEmail(),
-        check('password','The password should be at least 8 caracters long and contain an Upper Case letter and a number').isStrongPassword({minLength: 8,minLowercase:1 ,minUppercase: 1, minNumbers: 1, minSymbols: 0})],
-        async (req, res) => {
-            const errors = validationResult(req);
-            if (!errors.isEmpty()){
-                return res.json(errors);
-            }
+    function generateAccessToken(payload){
+        return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
+    }
+    // app.post('/token', (req,res)=>{
+    //     const refreshToken = req.body.token;
 
-            try {
-                const sql = "SELECT * FROM `credentials` WHERE `Email` = ?";
-                db.query(sql , [req.body.email,req.body.password], async (err, data) => {
-                    if (err){
-                        return res.json("Error");
+    // })
+
+    app.post("/signin", [
+        check('email', 'The email does not have the correct format').isEmail().normalizeEmail(),
+        check('password', 'The password should be at least 8 characters long and contain an uppercase letter and a number').isStrongPassword({ minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0 })
+    ], async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json(errors);
+        }
+    
+        try {
+            const sql = "SELECT * FROM `credentials` WHERE `Email` = ?";
+            db.query(sql, [req.body.email], async (err, data) => {
+                if (err) {
+                    return res.status(500).json("Error");
+                }
+    
+                if (data.length === 0) {
+                    return res.status(401).json({ Login: false });
+                }
+    
+                const user = data[0];
+    
+                const passwordMatch = await bcrypt.compare(req.body.password, user.Password);
+                if (!passwordMatch) {
+                    return res.status(401).json({ Login: false });
+                }
+    
+                const payload = { email: user.Email };
+                const accessToken = generateAccessToken(payload);
+                const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
+    
+                const updateTokenSql = "UPDATE `credentials` SET `Token`=? WHERE `Email` = ?";
+                db.query(updateTokenSql, [refreshToken, user.Email], (err, data) => {
+                    if (err) {
+                        return res.status(500).json({ Login: false });
                     }
-
-                    if (data.length > 0){
-
-                        const user = data[0];
-                        
-                        if (await bcrypt.compare(req.body.password, user.Password)) {
-                            const payload = {email: user.Email};
-                            console.log(process.env.ACCESS_TOKEN_SECRET);
-                            const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
-                            return res.json({Login:true, accessToken: accessToken});
-                        }
-                    }
-                    return res.json({Login: false});
-                    
-            
-                })}
-            catch {
-                return res.status(500).json("Error hashing password");
-            }
-    })
+                    return res.status(200).json({ Login: true, accessToken: accessToken, refreshToken: refreshToken });
+                });
+            });
+        } catch (error) {
+            return res.status(500).json("Error hashing password");
+        }
+    });
     
     
     app.post("/signup",[
@@ -66,8 +82,8 @@ function RegisterService(app, db) {
                         if (err){
                             return res.json("Error");
                         }
-                        const user = {email: user.Email}
-                        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+                        const payload = {email: user.Email}
+                        const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET)
                         return res.json({accessToken: accessToken});
                     })}
 

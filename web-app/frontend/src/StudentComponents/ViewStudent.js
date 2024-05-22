@@ -9,6 +9,8 @@ function ViewStudent() {
 
     const navigate = useNavigate();
 
+    const token = localStorage.getItem('accessToken');
+
     axios.defaults.withCredentials = true;
     useEffect(()=>{
         // axios.get('http://localhost:8081/session')
@@ -19,10 +21,13 @@ function ViewStudent() {
         // .catch(err => console.log(err));
 
 
-        axios.get('http://localhost:8081/student/' + id)
+        axios.get('http://localhost:8081/student/' + id, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }})
         .then(res => setStudent(res.data))
         .catch(err => console.log(err));
-    },[id, navigate])
+    },[id, navigate, token])
   
     return(
         <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
