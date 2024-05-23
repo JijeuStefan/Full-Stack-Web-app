@@ -113,7 +113,6 @@ function RegisterService(app, db) {
     app.post("/logout",(req, res)=>{
         const authHeader = req.headers['authorization'];
         const token = authHeader && authHeader.split(' ')[1];
-        console.log(token);
         if (token == null) { 
             return res.status(401).json({ message: 'Unauthorized' }); 
         }
