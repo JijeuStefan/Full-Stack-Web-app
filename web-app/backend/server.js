@@ -10,6 +10,7 @@ const StartDB = require("./DB/MySQL");
 const Session = require("./Service/Session")
 const RegisterService = require("./Service/Register");
 const StudentService = require("./Service/Students");
+const ProfessorService = require("./Service/Professor");
 
 function StartServer(){
     const app = express();
@@ -36,6 +37,7 @@ function StartServer(){
     Session(app);
     RegisterService(app,db);
     StudentService(app,db);
+    ProfessorService(app,db);
 
     app.listen(8081, () => {
         console.log("listening");

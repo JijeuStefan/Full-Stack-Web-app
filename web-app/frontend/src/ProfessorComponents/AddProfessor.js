@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate,Link } from "react-router-dom";
 
-function AddStudent() {
+function AddProfessor() {
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [group, setGroup] = useState(0);
+    const [course, setCourse] = useState("");
 
     const navigate = useNavigate();
 
@@ -13,10 +12,9 @@ function AddStudent() {
 
     const token = localStorage.getItem('accessToken');
 
-    axios.defaults.withCredentials = true;
     function handleSubmit(event){
         event.preventDefault();
-        axios.post('http://localhost:8081/student/add', {name, email, group}, {
+        axios.post('http://localhost:8081/professor/add', {name, course}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }})
@@ -39,7 +37,7 @@ function AddStudent() {
         <div className='d-flex vh-100 justify-content-center align-items-center' style={{ backgroundColor: '#0d1117', color: '#c9d1d9' }}>
             <div className='w-50 rounded p-3' style={{ backgroundColor: '#161b22', border: '1px solid #30363d' }}>
                 <form onSubmit={handleSubmit}>
-                    <h2>Add Student</h2>
+                    <h2>Add Professor</h2>
                         {backendErrors.map((error, index) => {
                             return (
                                 <div key={index} className="alert alert-warning alert-dismissible fade show" role="alert">
@@ -53,14 +51,9 @@ function AddStudent() {
                         onChange={e => setName(e.target.value)}/>
                     </div>
                     <div className='mb-2'>
-                        <label htmlFor="">Email</label>
-                        <input type="email" placeholder="Enter Email" className="form-control"
-                        onChange={e => setEmail(e.target.value)}/>
-                    </div>
-                    <div className='mb-2'>
-                        <label htmlFor="">Group</label>
-                        <input type="number" placeholder="Enter Group" className="form-control"
-                        onChange={e => setGroup(Number(e.target.value))}/>
+                        <label htmlFor="">Course</label>
+                        <input type="text" placeholder="Enter Course" className="form-control"
+                        onChange={e => setCourse(e.target.value)}/>
                     </div>
                     <div className="d-flex justify-content-between">
                         <Link to={`/home`} className="btn btn-secondary">Back</Link>
@@ -72,4 +65,4 @@ function AddStudent() {
     )
 }
 
-export default AddStudent;
+export default AddProfessor;

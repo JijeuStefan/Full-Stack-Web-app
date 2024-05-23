@@ -13,14 +13,6 @@ function ViewStudent() {
 
     axios.defaults.withCredentials = true;
     useEffect(()=>{
-        // axios.get('http://localhost:8081/session')
-        // .then(res => {
-        //     if (!res.data.status)
-        //         navigate("/");
-        // })
-        // .catch(err => console.log(err));
-
-
         axios.get('http://localhost:8081/student/' + id, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -30,9 +22,9 @@ function ViewStudent() {
     },[id, navigate, token])
   
     return(
-        <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
-            <div className="w-50 bg-white rounded p-3">
-                <table className="table">
+        <div className="d-flex vh-100 justify-content-center align-items-center" style={{ backgroundColor: '#0d1117', color: '#c9d1d9' }}>
+            <div className="w-50 rounded p-3" style={{ backgroundColor: '#161b22', border: '1px solid #30363d' }}>
+                <table className="table table-bordered table-dark">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -52,7 +44,7 @@ function ViewStudent() {
                         }
                     </tbody>
                 </table>
-                <Link to={`/students`} className="btn btn-secondary">Back</Link>
+                <Link to={`/home`} className="btn btn-secondary">Back</Link>
             </div>
         </div>
     )
