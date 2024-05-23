@@ -10,7 +10,6 @@ function Home() {
     const navigate = useNavigate();
     const token = localStorage.getItem('accessToken');
     
-    axios.defaults.withCredentials = true;
     useEffect(() => {
         axios.get('http://localhost:8081/professors', {
             headers: {
@@ -52,13 +51,23 @@ function Home() {
         setSelectedProfessor(professor);
     };
 
+    function handleLogout(token){
+        axios.post('http://localhost:8081/logout',{}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(localStorage.clear(),
+                navigate("/"))
+        .catch(err => console.log(err));
+    }
+
     return (
         <div className="d-flex flex-column vh-100" style={{ backgroundColor: '#0d1117', color: '#c9d1d9' }}>
             <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#161b22' }}>
                 <div className="container-fluid">
                     <div className="navbar-nav me-auto mb-2 mb-lg-0">
                         <Link to="/home" className="nav-link text-white">Home</Link>
-                        <Link to="/about" className="nav-link text-white">About</Link>
                     </div>
                     <div className="navbar-nav ms-auto">
                         <div className="nav-item dropdown">
@@ -67,7 +76,7 @@ function Home() {
                             </button>
                             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <li><Link to="/profile" className="dropdown-item">View Profile</Link></li>
-                                <li><button className="dropdown-item" onClick={() => navigate("/logout")}>Logout</button></li>
+                                <li><button className="dropdown-item" onClick={() => handleLogout(token)}>Logout</button></li>
                             </ul>
                         </div>
                     </div>

@@ -50,7 +50,6 @@ function StudentService(app,db) {
                 req.body.group,
                 req.body.id
             ]
-            console.log(values)
             db.query(sql , [values], (err, data) => {
                 return err ? res.json("Error") : res.json(data);
             })

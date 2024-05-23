@@ -108,6 +108,28 @@ function RegisterService(app, db) {
                     return res.status(500).json("Error hashing password");
                 }
     })
+
+
+    app.post("/logout",(req, res)=>{
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
+        console.log(token);
+        if (token == null) { 
+            return res.status(401).json({ message: 'Unauthorized' }); 
+        }
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err,user) =>{
+            if(err){
+                return res.status(403); }
+
+            const updateTokenSql = "UPDATE `credentials` SET `Token`='' WHERE `Email` = ?";
+            db.query(updateTokenSql, [user.email], (err, data) => {
+                if (err) {
+                    return res.status(500).json({ Login: false });
+                }
+                return res.status(200);
+            });
+        })
+    })
     
 }
 

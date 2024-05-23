@@ -7,7 +7,6 @@ const bodyParser = require("body-parser");
 
 
 const StartDB = require("./DB/MySQL");
-const Session = require("./Service/Session")
 const RegisterService = require("./Service/Register");
 const StudentService = require("./Service/Students");
 const ProfessorService = require("./Service/Professor");
@@ -34,7 +33,6 @@ function StartServer(){
 
     const db = StartDB();
 
-    Session(app);
     RegisterService(app,db);
     StudentService(app,db);
     ProfessorService(app,db);
