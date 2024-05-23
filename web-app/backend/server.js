@@ -1,7 +1,6 @@
 require('dotenv').config({ path: './Service/.env' })
 const express = require("express");
 const cors = require("cors");
-const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
@@ -21,15 +20,6 @@ function StartServer(){
     app.use(express.json());
     app.use(cookieParser());
     app.use(bodyParser.json());
-    app.use(session({
-        secret: 'secret',
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24
-        }
-    }))
 
     const db = StartDB();
 
