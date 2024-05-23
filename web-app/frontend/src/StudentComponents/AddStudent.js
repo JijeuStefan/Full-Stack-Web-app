@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 function AddStudent() {
+    const {id} = useParams();
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [group, setGroup] = useState(0);
@@ -13,10 +15,9 @@ function AddStudent() {
 
     const token = localStorage.getItem('accessToken');
 
-    axios.defaults.withCredentials = true;
     function handleSubmit(event){
         event.preventDefault();
-        axios.post('http://localhost:8081/student/add', {name, email, group}, {
+        axios.post('http://localhost:8081/student/add', {name, email, group, id}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }})

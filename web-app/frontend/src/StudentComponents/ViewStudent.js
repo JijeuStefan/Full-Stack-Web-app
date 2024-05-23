@@ -11,7 +11,6 @@ function ViewStudent() {
 
     const token = localStorage.getItem('accessToken');
 
-    axios.defaults.withCredentials = true;
     useEffect(()=>{
         axios.get('http://localhost:8081/student/' + id, {
             headers: {

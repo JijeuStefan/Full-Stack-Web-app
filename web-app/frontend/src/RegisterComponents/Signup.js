@@ -11,7 +11,6 @@ function Signup() {
 
     const [backendErrors, setBckErrors] = useState([]);
 
-    axios.defaults.withCredentials = true;
     const handleSubmit = (event)=>{
         event.preventDefault();
         axios.post('http://localhost:8081/signup', {name, email, password})

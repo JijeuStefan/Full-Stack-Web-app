@@ -94,6 +94,7 @@ function Home() {
                                         </button></td>
                                         <td>{professor.Cours}</td>
                                         <td><div className="ml-auto">
+                                            <Link to={`/student/add/${professor.ID}`} className="btn btn-success">Add Student</Link>
                                             <Link to={`/professor/update/${professor.ID}`} className="btn btn-primary mr-2">Update</Link>
                                             <button className="btn btn-danger" onClick={() => handleDelete("professor", professor.ID)}>Delete</button>
                                         </div></td>
@@ -107,7 +108,6 @@ function Home() {
                 <div className="flex-grow-1 p-3">
                     <div className="w-100 rounded p-3" style={{ backgroundColor: '#161b22', border: '1px solid #30363d' }}>
                         <h5 className="text-white">Students</h5>
-                        <Link to="/student/add" className="btn btn-success mb-3">Add +</Link>
                         <table className="table table-bordered table-dark">
                             <thead>
                                 <tr>
