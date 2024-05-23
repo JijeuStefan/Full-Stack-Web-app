@@ -27,8 +27,8 @@ function Signup() {
     }
 
     return(
-        <div className="d-flex justify-content-center align-items-center bg-primary vh-100">
-            <div className="bg-white p-3 rounded w-25">
+        <div className="d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: '#0d1117', color: '#c9d1d9' }}>
+            <div className="p-3 rounded w-25" style={{backgroundColor: '#161b22', border: '1px solid #30363d' }}>
                 <div className="d-flex justify-content-center align-items-center">
                     <h2>Sign up</h2>
                 </div>
@@ -55,7 +55,7 @@ function Signup() {
                         <input type="password" className="form-control rounded-0" placeholder="Enter Password"
                         onChange={e => setPassword(e.target.value)}/>
                     </div>
-                    <button type="submit" className="btn btn-success w-100"><strong>Sign up</strong></button>
+                    <button type="submit" className="btn btn-primary w-100"><strong>Sign up</strong></button>
                     <p></p>
                     <Link to="/" className="btn btn-default border w-100 bg-light">Log in</Link>
                 </form>
