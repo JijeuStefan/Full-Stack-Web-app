@@ -47,12 +47,12 @@ function Login() {
                 <form action="" onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="email"><strong>Email</strong></label>
-                        <input type="email" className="form-control rounded-0" placeholder="Enter Email"
+                        <input type="email" className="form-control rounded" placeholder="Enter Email"
                         onChange={e => setEmail(e.target.value)}/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password"><strong>Password</strong></label>
-                        <input type="password" className="form-control rounded-0" placeholder="Enter Password"
+                        <input type="password" className="form-control rounded" placeholder="Enter Password"
                         onChange={e => setPassword(e.target.value)}/>
                     </div>
                     <button type="submit" className="btn btn-primary w-100"><strong>Sign in</strong></button>
