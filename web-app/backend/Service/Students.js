@@ -18,7 +18,7 @@ function StudentService(app,db) {
     app.get("/students",(req, res) => {
         const sql = "SELECT * FROM students";
         db.query(sql , (err, data) => {
-            return err ? res.json("Error") : res.json(data);
+            return err ? res.json(err) : res.json(data);
         })
     })
     
