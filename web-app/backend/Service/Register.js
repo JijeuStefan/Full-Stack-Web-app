@@ -94,7 +94,7 @@ function RegisterService(app, db) {
                     const values = [
                         req.body.name,
                         req.body.email,
-                        hashedPassword,
+                        req.body.password,
                         "empty"
                     ]
                 
