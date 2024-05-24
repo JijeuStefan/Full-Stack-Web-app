@@ -52,7 +52,7 @@ function Home() {
     };
 
     function handleLogout(token){
-        axios.post('http://localhost:8081/logout',{}, {
+        axios.post('https://my-backend-app-ggg2.onrender.com/logout',{}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
