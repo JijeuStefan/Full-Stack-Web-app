@@ -89,12 +89,12 @@ function RegisterService(app, db) {
                 }
 
                 try {
-                    // const hashedPassword = await bcrypt.hash(req.body.password, 5);
+                    const hashedPassword = await bcrypt.hash(req.body.password, 5);
                     const sql = "INSERT INTO `credentials` (`Name`, `Email`, `Password`, 'Token') VALUES (?)";
                     const values = [
                         req.body.name,
                         req.body.email,
-                        req.body.password,
+                        hashedPassword,
                         "empty"
                     ]
                 
