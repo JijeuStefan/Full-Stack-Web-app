@@ -13,7 +13,7 @@ function Signup() {
 
     const handleSubmit = (event)=>{
         event.preventDefault();
-        axios.post('https://my-backend-app-ggg2.onrender.com/signup', {name, email, password})
+        axios.post('http://localhost:8081/signup', {name, email, password})
         .then(res => {
             if (res.data.errors){
                 setBckErrors(res.data.errors);
