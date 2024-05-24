@@ -12,7 +12,7 @@ function ViewStudent() {
     const token = localStorage.getItem('accessToken');
 
     useEffect(()=>{
-        axios.get('http://localhost:8081/student/' + id, {
+        axios.get('https://my-backend-app-ggg2.onrender.com/student/' + id, {
             headers: {
                 Authorization: `Bearer ${token}`
             }})

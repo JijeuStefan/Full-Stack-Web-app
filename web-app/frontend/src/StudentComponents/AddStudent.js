@@ -17,7 +17,7 @@ function AddStudent() {
 
     function handleSubmit(event){
         event.preventDefault();
-        axios.post('http://localhost:8081/student/add', {name, email, group, id}, {
+        axios.post('https://my-backend-app-ggg2.onrender.com/student/add', {name, email, group, id}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }})

@@ -11,7 +11,7 @@ function Home() {
     const token = localStorage.getItem('accessToken');
     
     useEffect(() => {
-        axios.get('http://localhost:8081/professors', {
+        axios.get('https://my-backend-app-ggg2.onrender.com/professors', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -19,7 +19,7 @@ function Home() {
         .then(res => setProfessors(res.data))
         .catch(err => console.log(err));
 
-        axios.get('http://localhost:8081/students', {
+        axios.get('https://my-backend-app-ggg2.onrender.com/students', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -36,7 +36,7 @@ function Home() {
         }   
         
         try {
-            await axios.delete(`http://localhost:8081/${type}/delete/${id}`, {
+            await axios.delete(`https://my-backend-app-ggg2.onrender.com/${type}/delete/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

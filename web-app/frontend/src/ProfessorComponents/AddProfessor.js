@@ -14,7 +14,7 @@ function AddProfessor() {
 
     function handleSubmit(event){
         event.preventDefault();
-        axios.post('http://localhost:8081/professor/add', {name, course}, {
+        axios.post('https://my-backend-app-ggg2.onrender.com/professor/add', {name, course}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }})

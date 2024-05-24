@@ -15,7 +15,7 @@ function UpdateProfessor() {
     const token = localStorage.getItem('accessToken');
     
     useEffect(()=>{
-        axios.get('http://localhost:8081/professor/' + id, {
+        axios.get('https://my-backend-app-ggg2.onrender.com/professor/' + id, {
             headers: {
                 Authorization: `Bearer ${token}`
             }})
@@ -27,7 +27,7 @@ function UpdateProfessor() {
 
     function handleSubmit(event){
         event.preventDefault();
-        axios.put('http://localhost:8081/professor/update/' + id, {name, course},{
+        axios.put('https://my-backend-app-ggg2.onrender.com/professor/update/' + id, {name, course},{
             headers: {
                 Authorization: `Bearer ${token}`
             }})

@@ -16,7 +16,7 @@ function UpdateStudent() {
     const token = localStorage.getItem('accessToken');
 
     useEffect(()=>{
-        axios.get('http://localhost:8081/student/' + id, {
+        axios.get('https://my-backend-app-ggg2.onrender.com/student/' + id, {
             headers: {
                 Authorization: `Bearer ${token}`
             }})
@@ -29,7 +29,7 @@ function UpdateStudent() {
 
     function handleSubmit(event){
         event.preventDefault();
-        axios.put('http://localhost:8081/student/update/' + id, {name, email, group},{
+        axios.put('https://my-backend-app-ggg2.onrender.com/student/update/' + id, {name, email, group},{
             headers: {
                 Authorization: `Bearer ${token}`
             }})
