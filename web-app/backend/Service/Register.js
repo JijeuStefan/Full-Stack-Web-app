@@ -1,11 +1,13 @@
 const {check, validationResult} = require('express-validator');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 function RegisterService(app, db) {
 
     function generateAccessToken(payload){
-        return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
+        return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+                    expiresIn: "15m"
+                });;
     }
     
     
@@ -89,8 +91,8 @@ function RegisterService(app, db) {
                 }
 
                 try {
-                    const hashedPassword = await bcrypt.hash(req.body.password, 5);
-                    const sql = "INSERT INTO `credentials` (`Name`, `Email`, `Password`, 'Token') VALUES (?)";
+                    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+                    const sql = "INSERT INTO `credentials` (`Name`, `Email`, `Password`, `Token`) VALUES (?)";
                     const values = [
                         req.body.name,
                         req.body.email,
@@ -102,7 +104,7 @@ function RegisterService(app, db) {
                         if (err){
                             return res.json("Error");
                         }
-                        return res.json();
+                        return res.status(201).json({ message: "User created successfully" });
                     })}
 
                 catch{
@@ -119,14 +121,14 @@ function RegisterService(app, db) {
         }
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err,user) =>{
             if(err){
-                return res.status(403); }
+                return res.sendStatus(403); }
 
             const updateTokenSql = "UPDATE `credentials` SET `Token`='' WHERE `Email` = ?";
             db.query(updateTokenSql, [user.email], (err, data) => {
                 if (err) {
                     return res.status(500).json({ Login: false });
                 }
-                return res.status(200);
+                return res.sendStatus(204);
             });
         })
     })

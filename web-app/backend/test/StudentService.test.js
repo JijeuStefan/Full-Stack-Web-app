@@ -7,7 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 
-const StudentService = require('../Service/Students');  // Update the path as necessary
+const StudentService = require('../Service/Students'); // Update the path as necessary
 
 chai.use(chaiHttp);
 chai.use(require('sinon-chai'));
