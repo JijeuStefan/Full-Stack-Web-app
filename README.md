@@ -79,8 +79,8 @@ List what needs to be installed beforehand:
 
 ```bash
 ### Clone the repository
-git clone https://github.com/JijeuStefan/Full-Stack-Web-app.git
-cd Full-Stack-Web-app
+git clone https://github.com/JijeuStefan/University-Management-System.git
+cd web-app
 
 # Install backend dependencies
 cd backend
@@ -113,7 +113,7 @@ Open the app in your browser: [http://localhost:3000](http://localhost:3000)
 ## 📁 Project Structure
 
 ```text
-Full-Stack-Web-app/
+University-Management-System/
 ├── backend/                  # Backend folder (Node.js + Express)
 │   ├── Service/              # API services (Auth, Students, Professors)
 │   ├── DB/                   # Database connection setup
