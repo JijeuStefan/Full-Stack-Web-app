@@ -10,6 +10,14 @@ The backend is deployed on Render and connected to a cloud MySQL database hosted
 
 This project follows a distributed client-server architecture with secure authentication, database integration, and RESTful API communication.
 
+## 🎬 Demo
+
+### 🖥️ Login Demo
+![Login Demo](./assets/LoginDemo.gif)
+
+### ⚙️ App Demo
+![App Demo](./assets/AppDemo.gif)
+
 ## ✨ Features
 
 ### Authentication
